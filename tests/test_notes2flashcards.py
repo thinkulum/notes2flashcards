@@ -1,6 +1,11 @@
-
+import sys
+import os
 from pytest import raises
+sys.path.insert(0, '..')
 from notes2flashcards.main import Notes2FlashcardsTest
+import tempfile
+import shutil
+
 
 def test_notes2flashcards():
     # test notes2flashcards without any subcommands or arguments
@@ -17,20 +22,21 @@ def test_notes2flashcards_debug():
         assert app.debug is True
 
 
-def test_command1():
-    # test command1 without arguments
-    argv = ['command1']
-    with Notes2FlashcardsTest(argv=argv) as app:
-        app.run()
-        data,output = app.last_rendered
-        assert data['foo'] == 'bar'
-        assert output.find('Foo => bar')
+def test_convert():
+    with tempfile.TemporaryDirectory() as tmp_dir_path:
+        res_dir = os.path.join(os.path.dirname(__file__), 'res')
+        input_file_name = 'test.yml'
+        res_input_file_path = os.path.join(res_dir, input_file_name)
+        test_input_file_path = os.path.join(tmp_dir_path, input_file_name)
+        shutil.copy(res_input_file_path, tmp_dir_path)
 
+        argv = ['convert', test_input_file_path]
+        with Notes2FlashcardsTest(argv=argv) as app:
+            app.run()
 
-    # test command1 with arguments
-    argv = ['command1', '--foo', 'not-bar']
-    with Notes2FlashcardsTest(argv=argv) as app:
-        app.run()
-        data,output = app.last_rendered
-        assert data['foo'] == 'not-bar'
-        assert output.find('Foo => not-bar')
+            with open(res_input_file_path, encoding='utf-8') as res_file:
+                res_data = res_file.read()
+            with open(test_input_file_path, encoding='utf-8') as test_file:
+                test_data = test_file.read()
+
+            assert test_data == res_data

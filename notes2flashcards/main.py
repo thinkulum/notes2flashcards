@@ -1,8 +1,8 @@
-
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
 from .core.exc import Notes2FlashcardsError
 from .controllers.base import Base
+from .controllers.formats import Formats
 
 # configuration defaults
 CONFIG = init_defaults('notes2flashcards')
@@ -42,11 +42,12 @@ class Notes2Flashcards(App):
 
         # register handlers
         handlers = [
-            Base
+            Base,
+            Formats
         ]
 
 
-class Notes2FlashcardsTest(TestApp,Notes2Flashcards):
+class Notes2FlashcardsTest(TestApp, Notes2Flashcards):
     """A sub-class of Notes2Flashcards that is better suited for testing."""
 
     class Meta:

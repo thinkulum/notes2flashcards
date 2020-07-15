@@ -96,7 +96,7 @@ class Formats(Controller):
 
                 is_heading = 0
 
-            for key in elt_yaml.keys():
+            for key in sorted(elt_yaml.keys()):
                 if is_heading:
                     parent_xml.set('key', key)
 

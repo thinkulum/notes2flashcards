@@ -8,7 +8,7 @@
 <xsl:output method="text"/>
 
 <!-- <xsl:variable name="tab" select="'&#x09;'"/> -->
-<xsl:variable name="tab" select="': '"/>
+<xsl:variable name="tab" select="'&#x9;'"/>
 <xsl:variable name="newline" select="'&#x0a;'"/>
 
 <xsl:template match="/">

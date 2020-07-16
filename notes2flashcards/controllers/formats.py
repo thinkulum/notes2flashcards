@@ -22,10 +22,10 @@ class Formats(Controller):
             (['input_file_path'],
             {'help': 'the input file path',
              'action': 'store'}),
-            # (['output_format'],
-            #  {'help': 'the output format',
-            #   'action': 'store',
-            #   'choices': ['tsv_traverse']}),
+            (['output_format'],
+             {'help': 'the output format',
+              'action': 'store',
+              'choices': ['tsv_traverse']}),
         ]
     )
     def convert(self):

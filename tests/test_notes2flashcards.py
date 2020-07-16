@@ -22,7 +22,7 @@ def test_notes2flashcards_debug():
         assert app.debug is True
 
 
-def test_convert():
+def test_convert_tsv_traverse():
     with tempfile.TemporaryDirectory() as test_dir_path:
         res_dir_path = os.path.join(os.path.dirname(__file__), 'res')
         input_file_name = 'test.yml'
@@ -30,7 +30,7 @@ def test_convert():
         test_input_file_path = os.path.join(test_dir_path, input_file_name)
         shutil.copy(res_input_file_path, test_dir_path)
 
-        argv = ['convert', test_input_file_path]
+        argv = ['convert', test_input_file_path, 'tsv_traverse']
         with Notes2FlashcardsTest(argv=argv) as app:
             app.run()
 

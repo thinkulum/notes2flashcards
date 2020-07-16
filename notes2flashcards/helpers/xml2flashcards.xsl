@@ -15,12 +15,12 @@
     <xsl:apply-templates/>
 </xsl:template>
 
-<xsl:template match="outline|li">
+<xsl:template match="notes|li">
     <xsl:variable name="self" select="."/>
     <xsl:variable name="breadcrumb">
         <xsl:for-each select="ancestor-or-self::*">
             <xsl:sort select="position()" order="ascending"/>
-            <xsl:if test="name(.) = 'li' or $self is /outline">
+            <xsl:if test="name(.) = 'li' or $self is /notes">
                 <xsl:value-of select="tlm:elt_string(.)"/>
                 <xsl:if test="position() != last()">
                     <xsl:text> &gt; </xsl:text>
@@ -98,7 +98,7 @@
         <xsl:when test="$elt instance of xs:integer">
             <xsl:value-of select="string($elt)"/>
         </xsl:when>
-        <xsl:when test="name($elt) = 'outline'">
+        <xsl:when test="name($elt) = 'notes'">
             <xsl:value-of select="name($elt)"/>
         </xsl:when>
         <xsl:when test="not(empty($elt[@key]))">

@@ -1,5 +1,5 @@
-'outline' child count	'3'
-'outline' first child	'first heading'
+'notes' child count	'3'
+'notes' first child	'first heading'
 'first heading' child count	'2'
 'first heading' first child	'key 1'
 'first heading' next sibling	'second heading'

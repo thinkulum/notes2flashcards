@@ -13,8 +13,8 @@ class Formats(Controller):
         stacked_type = 'embedded'
         stacked_on = 'base'
 
-    outline_xml = et.ElementTree()
-    outline_xml._setroot(et.Element('outline'))
+    notes_xml = et.ElementTree()
+    notes_xml._setroot(et.Element('notes'))
 
     @ex(
         help='convert to another format',
@@ -29,7 +29,7 @@ class Formats(Controller):
         ]
     )
     def convert(self):
-        """Convert the given outline to a set of flashcards."""
+        """Convert the given notes to a set of flashcards."""
 
         input_file_path = self.app.pargs.input_file_path
         infile = open(input_file_path)
@@ -44,7 +44,7 @@ class Formats(Controller):
         elif format == 'html':
             flashcards = self.convert_html(input_file_path, source)
 
-        root_xml = self.outline_xml.getroot()
+        root_xml = self.notes_xml.getroot()
         self.xml2flashcards(root_xml, input_file_path)
 
     def detect_format(self, input_file_path):
@@ -61,10 +61,10 @@ class Formats(Controller):
     def convert_yaml(self, input_file_path, source):
         """Convert the source text from YAML to the flashcards format."""
 
-        outline_yaml = yaml.safe_load(source)
+        notes_yaml = yaml.safe_load(source)
 
-        root_xml = self.outline_xml.getroot()
-        self.process_yaml(root_xml, outline_yaml)
+        root_xml = self.notes_xml.getroot()
+        self.process_yaml(root_xml, notes_yaml)
 
         return
 
@@ -122,7 +122,7 @@ class Formats(Controller):
         return flashcards
 
     def xml2flashcards(self, root, input_file_path):
-        """Convert the outline XML to the flaschards format."""
+        """Convert the notes XML to the flaschards format."""
 
         helpers_dir_path = os.path.join(
             os.path.dirname(

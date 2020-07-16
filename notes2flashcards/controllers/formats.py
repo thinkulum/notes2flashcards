@@ -46,7 +46,7 @@ class Formats(Controller):
 
         root_xml = self.notes_xml.getroot()
         if self.app.pargs.output_format == 'tsv_traverse':
-            self.xml2flashcards(root_xml, input_file_path)
+            self.xml2tsv_traverse(root_xml, input_file_path)
 
     def detect_format(self, input_file_path):
         """Detect the format of the input file."""
@@ -122,7 +122,7 @@ class Formats(Controller):
 
         return flashcards
 
-    def xml2flashcards(self, root, input_file_path):
+    def xml2tsv_traverse(self, root, input_file_path):
         """Convert the notes XML to the flaschards format."""
 
         helpers_dir_path = os.path.join(
@@ -130,7 +130,7 @@ class Formats(Controller):
                 os.path.dirname(__file__)),
             'helpers')
         flashcards_xsl_path = os.path.join(helpers_dir_path,
-            'xml2flashcards.xsl')
+            'xml2tsv_traverse.xsl')
         xml_path = re.sub('\.[^\.]+\Z', '.xml', input_file_path)
         flashcards_path = re.sub('\.[^\.]+\Z', '.txt', input_file_path)
 

@@ -99,7 +99,7 @@ class Formats(Controller):
 
             for key in sorted(elt_yaml.keys()):
                 if is_heading:
-                    parent_xml.set('key', key)
+                     parent_xml.set('key', key)
 
                 else:
                     last_child_xml = et.Element('li', {'key': key})
@@ -132,7 +132,8 @@ class Formats(Controller):
         flashcards_xsl_path = os.path.join(helpers_dir_path,
             'xml2tsv_traverse.xsl')
         xml_path = re.sub('\.[^\.]+\Z', '.xml', input_file_path)
-        flashcards_path = re.sub('\.[^\.]+\Z', '.txt', input_file_path)
+        flashcards_path = re.sub('\.[^\.]+\Z', '_tsv_traverse.txt',
+                                 input_file_path)
 
         xml_string = et.tostring(
             root,

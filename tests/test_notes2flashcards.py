@@ -34,7 +34,7 @@ def test_convert_tsv_traverse():
         with Notes2FlashcardsTest(argv=argv) as app:
             app.run()
 
-            output_file_name = 'test.txt'
+            output_file_name = 'test_tsv_traverse.txt'
             res_output_file_path = os.path.join(res_dir_path, output_file_name)
             test_output_file_path = os.path.join(test_dir_path,
                                                  output_file_name)

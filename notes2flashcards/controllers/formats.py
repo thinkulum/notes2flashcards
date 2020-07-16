@@ -45,7 +45,8 @@ class Formats(Controller):
             flashcards = self.convert_html(input_file_path, source)
 
         root_xml = self.notes_xml.getroot()
-        self.xml2flashcards(root_xml, input_file_path)
+        if self.app.pargs.output_format == 'tsv_traverse':
+            self.xml2flashcards(root_xml, input_file_path)
 
     def detect_format(self, input_file_path):
         """Detect the format of the input file."""

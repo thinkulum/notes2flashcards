@@ -37,12 +37,14 @@
         </xsl:call-template>
         -->
         <!-- value -->
-        <xsl:call-template name="add_flashcard">
-            <xsl:with-param name="elt" select="$self"/>
-            <xsl:with-param name="target" select="./text()"/>
-            <xsl:with-param name="axis" select="'value'"/>
-            <xsl:with-param name="breadcrumb" select="$breadcrumb"/>
-        </xsl:call-template>
+        <xsl:if test="not(li)">
+            <xsl:call-template name="add_flashcard">
+                <xsl:with-param name="elt" select="$self"/>
+                <xsl:with-param name="target" select="./text()"/>
+                <xsl:with-param name="axis" select="'value'"/>
+                <xsl:with-param name="breadcrumb" select="$breadcrumb"/>
+            </xsl:call-template>
+        </xsl:if>
         <!-- child count -->
         <xsl:call-template name="add_flashcard">
             <xsl:with-param name="elt" select="$self"/>

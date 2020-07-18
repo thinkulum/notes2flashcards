@@ -35,6 +35,9 @@ class Formats(Controller):
 
         flashcards = ''
 
+        self.notes_xml = et.ElementTree()
+        self.notes_xml._setroot(et.Element('notes'))
+
         format = self.detect_format(input_file_path)
         if format == 'yaml':
             flashcards = self.convert_yaml(input_file_path, source)
@@ -51,7 +54,7 @@ class Formats(Controller):
         """Detect the format of the input file."""
 
         format = ''
-        if re.search('\.yml', input_file_path, re.X | re.M | re.S):
+        if re.search('\.ya?ml', input_file_path, re.X | re.M | re.S):
             format = 'yaml'
         elif re.search('\.htm', input_file_path, re.X | re.M | re.S):
             format = 'html'
@@ -62,9 +65,6 @@ class Formats(Controller):
         """Convert the source text from YAML to the flashcards format."""
 
         notes_yaml = yaml.safe_load(source)
-
-        self.notes_xml = et.ElementTree()
-        self.notes_xml._setroot(et.Element('notes'))
 
         root_xml = self.notes_xml.getroot()
         self.process_yaml(root_xml, notes_yaml)

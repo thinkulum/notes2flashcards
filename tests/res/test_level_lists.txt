@@ -1,0 +1,41 @@
+---
+notes
+
+3
+first heading
+second heading
+third heading
+---
+first heading
+
+2
+key 1
+key 2
+---
+second heading
+
+2
+key a
+key b
+---
+third heading
+
+2
+value i
+value ii
+---
+first heading > key 1
+
+value 1
+---
+first heading > key 2
+
+value 2
+---
+second heading > key a
+
+value a
+---
+second heading > key b
+
+value b

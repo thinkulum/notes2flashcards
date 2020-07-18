@@ -13,9 +13,6 @@ class Formats(Controller):
         stacked_type = 'embedded'
         stacked_on = 'base'
 
-    notes_xml = et.ElementTree()
-    notes_xml._setroot(et.Element('notes'))
-
     @ex(
         help='convert to another format',
         arguments=[
@@ -25,7 +22,7 @@ class Formats(Controller):
             (['output_format'],
              {'help': 'the output format',
               'action': 'store',
-              'choices': ['tsv_traverse']}),
+              'choices': ['tsv_traverse', 'level_lists']}),
         ]
     )
     def convert(self):
@@ -47,6 +44,8 @@ class Formats(Controller):
         root_xml = self.notes_xml.getroot()
         if self.app.pargs.output_format == 'tsv_traverse':
             self.xml2tsv_traverse(root_xml, input_file_path)
+        elif self.app.pargs.output_format == 'level_lists':
+            self.xml2level_lists(root_xml, input_file_path)
 
     def detect_format(self, input_file_path):
         """Detect the format of the input file."""
@@ -63,6 +62,9 @@ class Formats(Controller):
         """Convert the source text from YAML to the flashcards format."""
 
         notes_yaml = yaml.safe_load(source)
+
+        self.notes_xml = et.ElementTree()
+        self.notes_xml._setroot(et.Element('notes'))
 
         root_xml = self.notes_xml.getroot()
         self.process_yaml(root_xml, notes_yaml)
@@ -124,22 +126,30 @@ class Formats(Controller):
 
     def xml2tsv_traverse(self, root, input_file_path):
         """Convert the notes XML to the flaschards format."""
+        self.xml2output_format(root, input_file_path, 'tsv_traverse')
+
+    def xml2level_lists(self, root, input_file_path):
+        """Convert the notes XML to the flaschards format."""
+        self.xml2output_format(root, input_file_path, 'level_lists')
+
+    def xml2output_format(self, root, input_file_path, output_format):
+        """Convert the notes XML to the flaschards format."""
 
         helpers_dir_path = os.path.join(
             os.path.dirname(
                 os.path.dirname(__file__)),
             'helpers')
         flashcards_xsl_path = os.path.join(helpers_dir_path,
-            'xml2tsv_traverse.xsl')
+            'xml2{}.xsl'.format(output_format))
         xml_path = re.sub('\.[^\.]+\Z', '.xml', input_file_path)
-        flashcards_path = re.sub('\.[^\.]+\Z', '_tsv_traverse.txt',
+        flashcards_path = re.sub('\.[^\.]+\Z', '_{}.txt'.format(output_format),
                                  input_file_path)
 
         xml_string = et.tostring(
             root,
             method='xml',
             encoding='unicode',
-            # pretty_print = True
+            pretty_print = True
         )
 
         xml_file = open(xml_path, 'w', encoding='utf-8')

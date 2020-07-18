@@ -44,3 +44,27 @@ def test_convert_tsv_traverse():
                 test_data = test_file.read()
 
             assert test_data == res_data
+
+
+def test_convert_level_lists():
+    with tempfile.TemporaryDirectory() as test_dir_path:
+        res_dir_path = os.path.join(os.path.dirname(__file__), 'res')
+        input_file_name = 'test.yml'
+        res_input_file_path = os.path.join(res_dir_path, input_file_name)
+        test_input_file_path = os.path.join(test_dir_path, input_file_name)
+        shutil.copy(res_input_file_path, test_dir_path)
+
+        argv = ['convert', test_input_file_path, 'level_lists']
+        with Notes2FlashcardsTest(argv=argv) as app:
+            app.run()
+
+            output_file_name = 'test_level_lists.txt'
+            res_output_file_path = os.path.join(res_dir_path, output_file_name)
+            test_output_file_path = os.path.join(test_dir_path,
+                                                 output_file_name)
+            with open(res_output_file_path, encoding='utf-8') as res_file:
+                res_data = res_file.read()
+            with open(test_output_file_path, encoding='utf-8') as test_file:
+                test_data = test_file.read()
+
+            assert test_data == res_data
